@@ -1,7 +1,7 @@
 const axios = require('axios');
+const recommendation = require('./recommendation');
+
 const PAIR = 'BTCBUSD';
-const PRICE_HIGH = 36291;
-const PRICE_LOW = 35764;
 
 async function main() {
   const response = await axios.get(
@@ -11,13 +11,8 @@ async function main() {
   const lastCandle = response.data[length - 1]; // last candle
   const currentPrice = parseFloat(lastCandle[4]);
 
-  if (currentPrice >= PRICE_HIGH) {
-    console.log(`*** SELL *** \n Price: ${currentPrice}`);
-  } else if (currentPrice <= PRICE_LOW) {
-    console.log(`*** BUY *** \n Price: ${currentPrice}`);
-  } else {
-    console.log(`*** HOLD *** \n Price: ${currentPrice}`);
-  }
+  const recommendationText = recommendation(currentPrice);
+  console.log(recommendationText);
 }
 
 setInterval(main, 1000);
