@@ -7,7 +7,7 @@ function recommendation(currentPrice) {
   } else if (currentPrice <= PRICE_LOW) {
     return `*** BUY *** \n Price: ${currentPrice}`;
   } else {
-    return `*** HOLD *** \n Price: ${currentPrice}`;
+    return -1;
   }
 }
 

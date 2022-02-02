@@ -14,7 +14,9 @@
   "author": "welingtobcassis",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.25.0"
+    "axios": "^0.25.0",
+    "dotenv": "^16.0.0",
+    "telegraf": "^4.6.0"
   },
   "devDependencies": {
     "jest": "^27.4.7"

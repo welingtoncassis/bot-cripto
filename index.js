@@ -1,21 +1,27 @@
+require('dotenv').config();
 const axios = require('axios');
+const { Telegraf } = require('telegraf');
 const recommendation = require('./recommendation');
 
 const PAIR = 'BTCBUSD';
 
 async function main() {
+  const bot = new Telegraf(process.env.BOT_TOKEN_TELEGRAM);
   const response = await axios.get(
     `https://api.binance.com/api/v3/klines?symbol=${PAIR}&interval=1m`
   );
   const length = response.data.length;
   const lastCandle = response.data[length - 1]; // last candle
-  const currentPrice = parseFloat(lastCandle[4]);
+  const currentPrice = parseInt(lastCandle[4]);
 
   const recommendationText = recommendation(currentPrice);
-  console.log(recommendationText);
+
+  if (recommendationText) {
+    bot.telegram.sendMessage(process.env.CHAT_ID_TELEGRAM, recommendationText);
+  }
 }
 
-setInterval(main, 1000);
+setInterval(main, 60000);
 
 main();
 

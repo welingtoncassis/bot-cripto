@@ -15,10 +15,4 @@ describe('Recommendation Function', () => {
     const recommendationText = recommendation(CURRENT_PRICE);
     expect(recommendationText).toBe('*** SELL *** \n Price: 36295');
   });
-
-  test('Should return string HOLD recommendation', () => {
-    const CURRENT_PRICE = 36100;
-    const recommendationText = recommendation(CURRENT_PRICE);
-    expect(recommendationText).toBe('*** HOLD *** \n Price: 36100');
-  });
 });
