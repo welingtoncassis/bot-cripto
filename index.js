@@ -1,7 +1,8 @@
 require('dotenv').config();
 const axios = require('axios');
 const { Telegraf } = require('telegraf');
-const recommendation = require('./recommendation');
+const alertPrice = require('./alertPrice');
+const calcRSI = require('./rsi');
 
 const PAIR = 'BTCBUSD';
 
@@ -14,10 +15,18 @@ async function main() {
   const lastCandle = response.data[length - 1]; // last candle
   const currentPrice = parseInt(lastCandle[4]);
 
-  const recommendationText = recommendation(currentPrice);
+  const closes = response.data.map((candle) => parseFloat(candle[4]));
 
-  if (recommendationText) {
-    bot.telegram.sendMessage(process.env.CHAT_ID_TELEGRAM, recommendationText);
+  const resultRSI = calcRSI(closes);
+  const alertPriceText = alertPrice(currentPrice);
+
+  if (alertPriceText) {
+    bot.telegram.sendMessage(process.env.CHAT_ID_TELEGRAM, alertPriceText);
+  }
+
+  if (resultRSI) {
+    let messageRSI = resultRSI + `\n Price: ${currentPrice}`;
+    bot.telegram.sendMessage(process.env.CHAT_ID_TELEGRAM, messageRSI);
   }
 }
 

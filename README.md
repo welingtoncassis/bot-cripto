@@ -8,6 +8,12 @@
 - Nodejs
 - Pkg axios
 
+## Functions
+
+- Alert Price
+- RSI Relative Strength Index https://br.tradingview.com/scripts/relativestrengthindex/
+- RSI = 100 - (100 / (1 + U/D ))
+
 # Run
 
 ```
