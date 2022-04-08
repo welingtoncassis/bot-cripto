@@ -1,7 +1,7 @@
 require('dotenv').config();
 const axios = require('axios');
 const { Telegraf } = require('telegraf');
-const alertPrice = require('./alertPrice');
+const alertPrice = require('./services/alertPrice');
 const calcRSI = require('./rsi');
 
 const PAIR = 'BTCBUSD';
@@ -17,8 +17,8 @@ async function main() {
 
   const closes = response.data.map((candle) => parseFloat(candle[4]));
 
-  const resultRSI = calcRSI(closes);
   const alertPriceText = alertPrice(currentPrice);
+  const resultRSI = calcRSI(closes);
 
   if (alertPriceText) {
     bot.telegram.sendMessage(process.env.CHAT_ID_TELEGRAM, alertPriceText);
@@ -33,13 +33,3 @@ async function main() {
 setInterval(main, 60000);
 
 main();
-
-// structure candle
-// [
-//   '1599273600000', // timestamp
-//   '0.03905000', // open
-//   '0.03905000', // high
-//   '0.03905000', // low
-//   '0.03905000', // close
-//   '0.03905000', // volume
-// ];

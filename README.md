@@ -23,3 +23,9 @@ npm i
 ```
 npm start
 ```
+
+## Todo
+
+- Migrate migrate to typescript or nestjs
+- CRUD to manage range of alert and coin pair
+- Persistence in database
